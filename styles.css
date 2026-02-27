@@ -1,0 +1,81 @@
+/* Basic resets and neon theme */
+:root{
+  --bg:#0b0f1a;
+  --panel: rgba(10,12,16,0.6);
+  --neon-1: #00f5ff;
+  --neon-2: #ff3d81;
+  --accent: #7cffb2;
+  --glass: rgba(255,255,255,0.04);
+  --ui-font: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);font-family:var(--ui-font);-webkit-font-smoothing:antialiased}
+canvas{display:block; width:100vw; height:100vh;}
+
+/* Animated starfield + grid background using pseudo elements on body */
+body::before, body::after{
+  content:"";
+  position:fixed; inset:0; pointer-events:none;
+  mix-blend-mode:overlay;
+}
+body::before{
+  background:
+    radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 40px 40px, 100% 100%;
+  transform: translateZ(0);
+  animation: drift 20s linear infinite;
+}
+@keyframes drift { from { transform: translateX(0);} to { transform: translateX(-160px);} }
+
+body::after{
+  background: linear-gradient(120deg, rgba(0,245,255,0.03), rgba(255,61,129,0.03));
+  mix-blend-mode:screen;
+  animation: pulse 6s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:0.7}50%{opacity:1} }
+
+/* UI panels */
+#ui{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:30; pointer-events:none;}
+.panel{
+  pointer-events:auto;
+  background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.02));
+  border:1px solid rgba(255,255,255,0.06);
+  padding:18px; border-radius:12px; text-align:center; color: #e9f6ff; box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+}
+.panel h1{margin:0 0 8px;font-size:36px; letter-spacing:2px; text-shadow:0 0 12px var(--neon-1)}
+.panel h2{margin:6px 0}
+.controls{display:flex; gap:10px; justify-content:center; margin:12px 0}
+.btn{
+  background:var(--glass); border:1px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:8px; color:#cfeffd;
+  cursor:pointer; font-weight:600;
+}
+.btn.primary{ background: linear-gradient(90deg,var(--neon-1),var(--neon-2)); color:#04060b; box-shadow:0 6px 30px rgba(0,245,255,0.07); border:none; text-shadow:none }
+.hint{opacity:0.75; font-size:13px}
+.optionsRow{display:flex; gap:12px; justify-content:center; align-items:center; margin-top:6px; flex-wrap:wrap}
+.hidden{display:none}
+
+/* HUD at top */
+#hud{position:fixed; top:18px; left:18px; right:18px; display:flex; justify-content:space-between; align-items:center; pointer-events:auto; z-index:25}
+#progressWrap{display:flex; gap:10px; align-items:center}
+#progressBar{width:360px; height:12px; background:rgba(255,255,255,0.04); border-radius:8px; box-shadow: inset 0 -2px 8px rgba(0,0,0,0.6)}
+#progressFill{height:100%; width:0%; border-radius:8px; background:linear-gradient(90deg,var(--neon-1),var(--neon-2)); box-shadow:0 6px 20px rgba(0,245,255,0.07); transition:width 0.15s linear}
+#percent{min-width:48px; text-align:right; font-weight:700}
+
+/* top right */
+#topRightControls{display:flex; gap:8px; align-items:center}
+
+/* Death and pause screens overlay central */
+#deathScreen, #pauseScreen{position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:50; min-width:280px}
+
+/* responsive tweaks */
+@media (max-width:600px){
+  #progressBar{width:140px}
+  .panel{width:90%; padding:12px}
+  .controls{flex-direction:column}
+}
+
+/* little neon glow for focus */
+.btn:focus{outline:none; box-shadow:0 0 20px rgba(0,245,255,0.12)}
