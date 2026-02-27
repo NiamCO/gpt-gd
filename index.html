@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Neon Dash — Vanilla HTML/CSS/JS</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="ui">
+    <div id="startScreen" class="panel">
+      <h1>Neon Dash</h1>
+      <div class="controls">
+        <button id="btnPlay" class="btn primary">Play</button>
+        <select id="levelSelect" class="btn">
+          <option value="0">Level 1 — Warmup</option>
+          <option value="1">Level 2 — Speedrun</option>
+          <option value="2">Level 3 — Spike Gauntlet</option>
+        </select>
+      </div>
+      <div class="optionsRow">
+        <label>Cube Color <input type="color" id="colorPicker" value="#00ffff"></label>
+        <label><input type="checkbox" id="musicToggle" checked> Music</label>
+      </div>
+      <p class="hint">Press Space or tap to jump. Hold to short-hop (no, not that short-hop).</p>
+      <div class="meta">Local high score: <span id="highScore">0%</span></div>
+    </div>
+
+    <div id="hud" class="panel hidden">
+      <div id="progressWrap">
+        <div id="progressBar"><div id="progressFill"></div></div>
+        <div id="percent">0%</div>
+      </div>
+      <div id="topRightControls">
+        <button id="btnPause" class="btn">Pause</button>
+        <button id="btnRestart" class="btn">Restart</button>
+      </div>
+    </div>
+
+    <div id="pauseScreen" class="panel hidden">
+      <h2>Paused</h2>
+      <div class="controls">
+        <button id="btnResume" class="btn primary">Resume</button>
+        <button id="btnQuit" class="btn">Quit to Menu</button>
+      </div>
+    </div>
+
+    <div id="deathScreen" class="panel hidden">
+      <h2>You Died</h2>
+      <p id="deathStat">Progress: 0%</p>
+      <div class="controls">
+        <button id="btnRetry" class="btn primary">Retry</button>
+        <button id="btnToMenu" class="btn">Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="gameCanvas"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
